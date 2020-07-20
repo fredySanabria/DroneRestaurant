@@ -1,0 +1,14 @@
+package com.s4n.restaurant.domain;
+
+public enum CardinalPoint {
+    N("North"),
+    S("South"),
+    W("West"),
+    E("East");
+
+    private final String name;
+
+    CardinalPoint(String point) {
+        this.name = point;
+    }
+}
