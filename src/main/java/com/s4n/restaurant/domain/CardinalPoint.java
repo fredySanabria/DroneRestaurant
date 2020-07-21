@@ -6,9 +6,6 @@ public enum CardinalPoint {
     W("West"),
     E("East");
 
-    private final String name;
-
     CardinalPoint(String point) {
-        this.name = point;
     }
 }

@@ -17,7 +17,7 @@ import static org.junit.Assert.assertNotNull;
 
 public class TextRepositoryTest {
     private IDeliveryRoutesRepository routesRepository;
-    List<Coordinate> deliveryRoutes = new ArrayList<>();
+    final List<Coordinate> deliveryRoutes = new ArrayList<>();
 
     @Before
     public void init(){

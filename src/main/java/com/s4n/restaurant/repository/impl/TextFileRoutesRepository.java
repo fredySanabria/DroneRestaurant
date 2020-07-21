@@ -1,5 +1,6 @@
 package com.s4n.restaurant.repository.impl;
 
+import com.s4n.restaurant.domain.Coordinate;
 import com.s4n.restaurant.domain.Dron;
 import com.s4n.restaurant.repository.IDeliveryRoutesRepository;
 import com.s4n.restaurant.utils.AppConstants;
@@ -10,11 +11,12 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class TextFileRoutesRepository implements IDeliveryRoutesRepository {
-    private String folder = FileUtils.getProperty("instructions-folder");
+    private final String folder = FileUtils.getProperty("instructions-folder");
     /**
      * Extract instructions from file return a String list with instructions
      * @param dron
@@ -30,10 +32,8 @@ public class TextFileRoutesRepository implements IDeliveryRoutesRepository {
             try (Stream<String> stream = Files.lines(Paths.get(fileName))) {
                 instructionsList = stream
                         .map(String::toUpperCase)
-                        .limit(Integer.parseInt(FileUtils.getProperty("max-deliveries")))
+                        .limit(Integer.parseInt(Objects.requireNonNull(FileUtils.getProperty("max-deliveries"))))
                         .collect(Collectors.toList());
-            } catch (IOException exception) {
-                throw exception;
             }
         }
         return instructionsList;
@@ -45,7 +45,7 @@ public class TextFileRoutesRepository implements IDeliveryRoutesRepository {
         String content = AppConstants.FIRST_LINE_REPORT_FILE;
         String fileName = folder + dronName +  AppConstants.FILE_EXTENSION;
         content += dron.getDeliveryList().stream()
-                .map(coordinate -> coordinate.toString())
+                .map(Coordinate::toString)
                 .collect(Collectors.joining("\n"));
         Files.write(Paths.get(fileName), content.getBytes());
     }
