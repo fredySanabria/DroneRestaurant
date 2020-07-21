@@ -17,6 +17,10 @@ import java.util.stream.Stream;
 
 public class TextFileRoutesRepository implements IDeliveryRoutesRepository {
     private final String folder = FileUtils.getProperty("instructions-folder");
+
+    public TextFileRoutesRepository() throws IOException {
+    }
+
     /**
      * Extract instructions from file return a String list with instructions
      * @param dron

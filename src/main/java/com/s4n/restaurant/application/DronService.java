@@ -30,7 +30,7 @@ public class DronService {
      *
      * @return
      */
-    public List<Dron> getDrones() throws OutOfRangeException {
+    public List<Dron> getDrones() throws OutOfRangeException, IOException {
         IntStream intStream = IntStream
                 .rangeClosed(1,
                         Integer.parseInt(Objects.requireNonNull(FileUtils.getProperty("total-drones"))));
