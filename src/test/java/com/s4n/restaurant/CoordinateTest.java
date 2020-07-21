@@ -5,9 +5,11 @@ import com.s4n.restaurant.domain.Coordinate;
 import com.s4n.restaurant.exception.OutOfRangeException;
 import org.junit.Test;
 
+import java.io.IOException;
+
 public class CoordinateTest {
     @Test(expected = OutOfRangeException.class)
-    public void shouldThrowOutOfRangeException(){
-        Coordinate coordinate = new Coordinate(12,12, CardinalPoint.W);
+    public void shouldThrowOutOfRangeException() throws IOException {
+        Coordinate coordinate = new Coordinate(-12,12, CardinalPoint.W);
     }
 }

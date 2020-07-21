@@ -1,7 +1,9 @@
 package com.s4n.restaurant.domain;
 
+import com.s4n.restaurant.exception.InstructionFileNotFoundException;
 import com.s4n.restaurant.exception.OutOfRangeException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,7 +58,7 @@ public class Dron {
      * @param move
      * @return
      */
-    public Coordinate makeMove(String move, Coordinate actualCoordinate) throws OutOfRangeException {
+    public Coordinate makeMove(String move, Coordinate actualCoordinate) throws OutOfRangeException, InstructionFileNotFoundException {
         String moveDirection = move + actualCoordinate.getCardinalPoint();
         switch (moveDirection){
             case "AN":
@@ -88,6 +90,10 @@ public class Dron {
                 actualCoordinate.setCardinalPoint(CardinalPoint.N);
                 break;
         }
-        return new Coordinate(actualCoordinate.getX(),actualCoordinate.getY(),actualCoordinate.getCardinalPoint());
+        try {
+            return new Coordinate(actualCoordinate.getX(),actualCoordinate.getY(),actualCoordinate.getCardinalPoint());
+        } catch (IOException exception) {
+            throw new InstructionFileNotFoundException("File property not found");
+        }
     }
 }

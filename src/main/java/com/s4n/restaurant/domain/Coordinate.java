@@ -3,6 +3,7 @@ package com.s4n.restaurant.domain;
 import com.s4n.restaurant.exception.OutOfRangeException;
 import com.s4n.restaurant.utils.FileUtils;
 
+import java.io.IOException;
 import java.util.Objects;
 
 public class Coordinate {
@@ -10,7 +11,7 @@ public class Coordinate {
     private int y;
     private CardinalPoint cardinalPoint;
 
-    public Coordinate(int x, int y, CardinalPoint cardinalPoint) throws OutOfRangeException {
+    public Coordinate(int x, int y, CardinalPoint cardinalPoint) throws OutOfRangeException, IOException {
         this.x = x;
         this.y = y;
         this.cardinalPoint = cardinalPoint;
@@ -71,8 +72,8 @@ public class Coordinate {
      * Validates if Coordinate is out of allowed range
      * @return
      */
-    private boolean validateOutOfRangeCoordinate(){
+    private boolean validateOutOfRangeCoordinate() throws IOException {
         int maxValue = Integer.parseInt(Objects.requireNonNull(FileUtils.getProperty("max-coordinate-value")));
-        return (getX() > maxValue) || (getY() > maxValue);
+        return (Math.abs(getX()) > maxValue) || (Math.abs(getY()) > maxValue);
     }
 }
