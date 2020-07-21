@@ -1,0 +1,4 @@
+   ==   DELIVERY REPORT   ==   
+Coordinate{x=-2, y=4, cardinalPoint=W}
+Coordinate{x=-1, y=3, cardinalPoint=S}
+Coordinate{x=0, y=0, cardinalPoint=W}

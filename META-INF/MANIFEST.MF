@@ -1,0 +1,1 @@
+Main-Class: com.s4n.restaurant.App
