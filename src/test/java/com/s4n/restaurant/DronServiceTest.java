@@ -19,6 +19,7 @@ import static org.mockito.Mockito.when;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -36,7 +37,7 @@ public class DronServiceTest {
     public void init() {
         repository = mock(TextFileRoutesRepository.class);
         dronService = new DronService(repository);
-        totalDrones = Integer.parseInt(FileUtils.getProperty("total-drones"));
+        totalDrones = Integer.parseInt(Objects.requireNonNull(FileUtils.getProperty("total-drones")));
         restaurantDronList = dronService.getDrones();
     }
 

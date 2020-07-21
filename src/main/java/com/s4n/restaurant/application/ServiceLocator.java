@@ -5,7 +5,7 @@ import com.s4n.restaurant.repository.impl.TextFileRoutesRepository;
 
 public class ServiceLocator {
     private static ServiceLocator serviceLocator;
-    private IDeliveryRoutesRepository routesRepository;
+    private final IDeliveryRoutesRepository routesRepository;
 
     private ServiceLocator(){
         routesRepository = new TextFileRoutesRepository();

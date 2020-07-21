@@ -8,6 +8,7 @@ import com.s4n.restaurant.repository.IDeliveryRoutesRepository;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import com.s4n.restaurant.utils.FileUtils;
@@ -15,7 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class DronService {
-    private IDeliveryRoutesRepository routesRepository;
+    private final IDeliveryRoutesRepository routesRepository;
     private static final Logger logger = LoggerFactory.getLogger(DronService.class);
 
     public DronService(IDeliveryRoutesRepository routesRepository) {
@@ -27,8 +28,8 @@ public class DronService {
      * @return
      */
     public List<Dron> getDrones() {
-        IntStream intStream = IntStream.rangeClosed(1, Integer.parseInt(FileUtils.getProperty("total-drones")));
-        int maxDeliveries = Integer.parseInt(FileUtils.getProperty("max-deliveries"));
+        IntStream intStream = IntStream.rangeClosed(1, Integer.parseInt(Objects.requireNonNull(FileUtils.getProperty("total-drones"))));
+        int maxDeliveries = Integer.parseInt(Objects.requireNonNull(FileUtils.getProperty("max-deliveries")));
         return intStream
                 .mapToObj(number -> new Dron(number, maxDeliveries, new Coordinate(0, 0, CardinalPoint.N)))
                 .collect(Collectors.toList());
