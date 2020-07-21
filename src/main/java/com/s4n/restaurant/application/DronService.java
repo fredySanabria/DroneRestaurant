@@ -3,6 +3,7 @@ package com.s4n.restaurant.application;
 import com.s4n.restaurant.domain.CardinalPoint;
 import com.s4n.restaurant.domain.Coordinate;
 import com.s4n.restaurant.domain.Dron;
+import com.s4n.restaurant.exception.OutOfRangeException;
 import com.s4n.restaurant.repository.IDeliveryRoutesRepository;
 
 import java.io.IOException;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
 import com.s4n.restaurant.utils.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,18 +27,23 @@ public class DronService {
 
     /**
      * GetDrones return a list of dron's with a default parameters created in a config file
+     *
      * @return
      */
-    public List<Dron> getDrones() {
-        IntStream intStream = IntStream.rangeClosed(1, Integer.parseInt(Objects.requireNonNull(FileUtils.getProperty("total-drones"))));
+    public List<Dron> getDrones() throws OutOfRangeException {
+        IntStream intStream = IntStream
+                .rangeClosed(1,
+                        Integer.parseInt(Objects.requireNonNull(FileUtils.getProperty("total-drones"))));
         int maxDeliveries = Integer.parseInt(Objects.requireNonNull(FileUtils.getProperty("max-deliveries")));
+        Coordinate initialCoordinate = new Coordinate(0, 0, CardinalPoint.N);
         return intStream
-                .mapToObj(number -> new Dron(number, maxDeliveries, new Coordinate(0, 0, CardinalPoint.N)))
+                .mapToObj(number -> new Dron(number, maxDeliveries, initialCoordinate))
                 .collect(Collectors.toList());
     }
 
     /**
      * Extract instructions of repository and executes all deliveries
+     *
      * @param dron
      * @return
      */
@@ -50,13 +57,14 @@ public class DronService {
         }
         dron.setDeliveryList(
                 routesList.stream()
-                .map(route -> makeDelivery(dron,route))
-                .collect(Collectors.toList()));
+                        .map(route -> makeDelivery(dron, route))
+                        .collect(Collectors.toList()));
         return dron;
     }
 
     /**
      * Write report file for a specific dron
+     *
      * @param dron
      */
     public void writeDronReport(Dron dron) {
@@ -69,14 +77,15 @@ public class DronService {
 
     /**
      * Execute all the move instructions and returns the last Coordinate
+     *
      * @param dron
      * @param instructionsLine
      * @return
      */
     public Coordinate makeDelivery(Dron dron, String instructionsLine) {
         return instructionsLine.chars()
-                .mapToObj(character -> String.valueOf((char)character))
-                .map(move -> dron.makeMove(move,dron.getActualCoordinate()))
+                .mapToObj(character -> String.valueOf((char) character))
+                .map(move -> dron.makeMove(move, dron.getActualCoordinate()))
                 .reduce((first, second) -> second).get();
     }
 }

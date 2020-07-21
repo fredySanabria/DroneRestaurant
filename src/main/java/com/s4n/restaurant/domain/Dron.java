@@ -1,5 +1,7 @@
 package com.s4n.restaurant.domain;
 
+import com.s4n.restaurant.exception.OutOfRangeException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,7 +56,7 @@ public class Dron {
      * @param move
      * @return
      */
-    public Coordinate makeMove(String move, Coordinate actualCoordinate) {
+    public Coordinate makeMove(String move, Coordinate actualCoordinate) throws OutOfRangeException {
         String moveDirection = move + actualCoordinate.getCardinalPoint();
         switch (moveDirection){
             case "AN":
