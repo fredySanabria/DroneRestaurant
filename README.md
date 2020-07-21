@@ -32,12 +32,6 @@
    * max-deliveries: number of  max deliveries for dron.
    * instructions - folder: folder that contains all the instructions and reports files.
 
- * Techniques - Technologies:
-    -  
-        
-  + BackEnd
-  It's a RestFull API developed with Java 8, using SpringBoot framework, JPA-Hibernate for MySql repository.
-        For the Twitter API integration Twitter4j Library and Swagger 2 for the documentation.
         
  * Examples:
     - 
