@@ -2,6 +2,7 @@ package com.s4n.restaurant;
 
 import com.s4n.restaurant.application.DronService;
 import com.s4n.restaurant.application.ServiceLocator;
+import com.s4n.restaurant.exception.OutOfRangeException;
 import com.s4n.restaurant.repository.IDeliveryRoutesRepository;
 
 
@@ -11,7 +12,7 @@ import com.s4n.restaurant.repository.IDeliveryRoutesRepository;
  */
 public class App 
 {
-    public static void main( String[] args ){
+    public static void main( String[] args ) throws OutOfRangeException {
         IDeliveryRoutesRepository routesRepository = ServiceLocator.getInstance().getRoutesRepository();
         DronService dronService = new DronService(routesRepository);
         dronService.getDrones().stream()

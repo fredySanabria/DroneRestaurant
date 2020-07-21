@@ -1,5 +1,8 @@
 package com.s4n.restaurant.domain;
 
+import com.s4n.restaurant.exception.OutOfRangeException;
+import com.s4n.restaurant.utils.FileUtils;
+
 import java.util.Objects;
 
 public class Coordinate {
@@ -7,10 +10,13 @@ public class Coordinate {
     private int y;
     private CardinalPoint cardinalPoint;
 
-    public Coordinate(int x, int y, CardinalPoint cardinalPoint) {
+    public Coordinate(int x, int y, CardinalPoint cardinalPoint) throws OutOfRangeException {
         this.x = x;
         this.y = y;
         this.cardinalPoint = cardinalPoint;
+        if(validateOutOfRangeCoordinate()){
+            throw new OutOfRangeException("Dron is in max allowed coordinate");
+        };
     }
 
     public int getX() {
@@ -59,5 +65,14 @@ public class Coordinate {
                 ", y=" + y +
                 ", cardinalPoint=" + cardinalPoint +
                 '}';
+    }
+
+    /**
+     * Validates if Coordinate is out of allowed range
+     * @return
+     */
+    private boolean validateOutOfRangeCoordinate(){
+        int maxValue = Integer.parseInt(Objects.requireNonNull(FileUtils.getProperty("max-coordinate-value")));
+        return (getX() > maxValue) || (getY() > maxValue);
     }
 }
