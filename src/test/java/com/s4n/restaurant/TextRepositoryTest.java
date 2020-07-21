@@ -20,7 +20,7 @@ public class TextRepositoryTest {
     final List<Coordinate> deliveryRoutes = new ArrayList<>();
 
     @Before
-    public void init(){
+    public void init() throws IOException {
         routesRepository = new TextFileRoutesRepository();
         deliveryRoutes.add(new Coordinate(-2,4,CardinalPoint.W));
         deliveryRoutes.add(new Coordinate(-1,3,CardinalPoint.S));

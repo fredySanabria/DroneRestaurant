@@ -34,7 +34,7 @@ public class DronServiceTest {
     private IDeliveryRoutesRepository repository;
 
     @Before
-    public void init() {
+    public void init() throws IOException {
         repository = mock(TextFileRoutesRepository.class);
         dronService = new DronService(repository);
         totalDrones = Integer.parseInt(Objects.requireNonNull(FileUtils.getProperty("total-drones")));
@@ -48,7 +48,7 @@ public class DronServiceTest {
     }
 
     @Test
-    public void shouldMoveDronInOtherCoordinate() {
+    public void shouldMoveDronInOtherCoordinate() throws IOException {
         String instructionsLine = "AAAAIAA";
         dronService.makeDelivery(restaurantDronList.get(0), instructionsLine);
         assertNotNull(restaurantDronList.get(0).getActualCoordinate());
